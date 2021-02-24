@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Aldentea.ChallongeSolkoff.Core</RootNamespace>
+    <Authors>aldentea</Authors>
+    <Company />
+    <Product>aldentea</Product>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MvvmCross" Version="7.1.2" />
+  </ItemGroup>
+
+</Project>
