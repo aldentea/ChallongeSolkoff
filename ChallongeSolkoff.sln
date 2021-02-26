@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallongeSolkoff", "Challon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallongeSolkoff.Core", "ChallongeSolkoff.Core\ChallongeSolkoff.Core.csproj", "{52A289FA-F9AC-4E6D-834D-19199D69B688}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallongeSolkoff.Core2", "ChallongeSolkoff.Core2\ChallongeSolkoff.Core2.csproj", "{571BA31C-425E-494C-A3D8-85083693B882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{52A289FA-F9AC-4E6D-834D-19199D69B688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A289FA-F9AC-4E6D-834D-19199D69B688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A289FA-F9AC-4E6D-834D-19199D69B688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{571BA31C-425E-494C-A3D8-85083693B882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{571BA31C-425E-494C-A3D8-85083693B882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{571BA31C-425E-494C-A3D8-85083693B882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{571BA31C-425E-494C-A3D8-85083693B882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

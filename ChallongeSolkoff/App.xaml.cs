@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 using MvvmCross.Core;
+using MvvmCross.Platforms.Wpf.Core;
 
 namespace Aldentea.ChallongeSolkoff
 {
@@ -15,10 +16,21 @@ namespace Aldentea.ChallongeSolkoff
 	/// </summary>
 	public partial class App : MvvmCross.Platforms.Wpf.Views.MvxApplication
 	{
-		App()
+		protected override void RegisterSetup()
 		{
-			
-			this.RegisterSetupType<MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core.App>>();
+			//base.RegisterSetup();
+			this.RegisterSetupType<MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core2.App>>();
+		}
+	}
+
+
+	public class Setup : MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core2.App>
+	{
+		protected override void InitializeFirstChance()
+		{
+			MvvmCross.Mvx.IoCProvider.RegisterType<Core2.Services.IChallongeWebService, Core2.Services.ChallongeWebService>();
+			//MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IRetrieveMailsService, Core.Services.RetrieveMailsService>();
+			base.InitializeFirstChance();
 		}
 	}
 }
