@@ -18,8 +18,8 @@ namespace Aldentea.ChallongeSolkoff
 	{
 		protected override void RegisterSetup()
 		{
-			//base.RegisterSetup();
-			this.RegisterSetupType<MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core2.App>>();
+			base.RegisterSetup();
+			this.RegisterSetupType<Setup>();
 		}
 	}
 
