@@ -23,14 +23,23 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="200" />
 				<ColumnDefinition />
+				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" MinWidth="120" InputScope="LogOnName" AutomationProperties.HelpText="ユーザ名" Text="{Binding UserName, Mode=TwoWay}" />
-			<TextBox Grid.Row="0" Grid.Column="1" MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" />
+			<TextBox Grid.Row="0" Grid.Column="1" MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" Grid.ColumnSpan="2" />
 			<TextBox Grid.Row="1" Grid.Column="0" MinWidth="120" Text="{Binding TournamentID, Mode=TwoWay}" />
-			<Button Grid.Row="1" Grid.Column="1"  Content="取得" MinWidth="60" Command="{Binding RetrieveMatchesCommand}" />
+			<Button Grid.Row="1" Grid.Column="1"  Content="プレイヤー取得" MinWidth="60" Command="{Binding RetrieveParticipantsCommand}" />
+			<Button Grid.Row="1" Grid.Column="2"  Content="マッチ結果取得" MinWidth="60" Command="{Binding RetrieveMatchesCommand}" />
 		</Grid>
 		<Label Grid.Row="1" Content="{Binding ErrorMessage}" />
-		<DataGrid Grid.Row="2" ItemsSource="{Binding Matches}"/>
+		<TabControl Grid.Row="2">
+			<TabItem Header="プレイヤー結果">
+				<DataGrid ItemsSource="{Binding Participants}"/>
+			</TabItem>
+			<TabItem Header="マッチ結果">
+				<DataGrid ItemsSource="{Binding Matches}"/>
+			</TabItem>
+		</TabControl>
 
 
 	</Grid>

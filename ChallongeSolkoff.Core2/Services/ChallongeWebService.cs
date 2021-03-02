@@ -13,24 +13,10 @@ namespace Aldentea.ChallongeSolkoff.Core2.Services
 	{
 		private static readonly HttpClient client = new HttpClient();
 
-		//private static async Task ProcessRepositories()
-		//{
-		//	client.DefaultRequestHeaders.Accept.Clear();
-		//	client.DefaultRequestHeaders.Accept.Add(
-		//		new MediaTypeWithQualityHeaderValue("application/json")
-		//		);
-		//	client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-
-		//	var stringTask = client.GetStringAsync("https//api.challonge.com/v1/tounaments.json?");
-		//	var message = await stringTask;
-
-		//	// do something
-		//}
 
 		public async Task<IEnumerable<MatchItem>> GetMatches(string tournamentID, string userName, string apiKey)
 		{
-			var uri = $@"https://{userName}:{apiKey}@api.challonge.com/v1/tournaments/{tournamentID}/matches.json";
+			//var uri = $@"https://{userName}:{apiKey}@api.challonge.com/v1/tournaments/{tournamentID}/matches.json";
 			var base_uri = $@"https://api.challonge.com/v1/tournaments/{tournamentID}/matches.json";
 			var request = new HttpRequestMessage(HttpMethod.Get, base_uri);
 			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
@@ -52,6 +38,29 @@ namespace Aldentea.ChallongeSolkoff.Core2.Services
 			//return await System.Text.Json.JsonSerializer.DeserializeAsync<List<Match>>(stream);
 		}
 
+		public async Task<IEnumerable<ParticipantItem>> GetParticipants(string tournamentID, string userName, string apiKey)
+		{
+			// コピペの巻、
+			var base_uri = $@"https://api.challonge.com/v1/tournaments/{tournamentID}/participants.json";
+			var request = new HttpRequestMessage(HttpMethod.Get, base_uri);
+			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
+				Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{apiKey}"))
+			);
+			var response = await client.SendAsync(request);
+			if (response.StatusCode == System.Net.HttpStatusCode.OK)
+			{
+				using (var stream = new System.IO.MemoryStream(await response.Content.ReadAsByteArrayAsync()))
+				{
+					return await System.Text.Json.JsonSerializer.DeserializeAsync<List<ParticipantItem>>(stream);
+				}
+			}
+			else
+			{
+				return new List<ParticipantItem>();
+			}
+
+		}
+
 	}
 
 
@@ -59,5 +68,6 @@ namespace Aldentea.ChallongeSolkoff.Core2.Services
 	public interface IChallongeWebService
 	{
 		Task<IEnumerable<MatchItem>> GetMatches(string tournamentID, string userName, string apiKey);
+		Task<IEnumerable<ParticipantItem>> GetParticipants(string tournamentID, string userName, string apiKey);
 	}
 }
