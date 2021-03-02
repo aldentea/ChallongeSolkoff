@@ -34,7 +34,7 @@ namespace Aldentea.ChallongeSolkoff.Core2
 			}
 			string _apiKey = string.Empty;
 
-			public int TournamentID
+			public string TournamentID
 			{
 				get => _tournamentID;
 				set
@@ -43,7 +43,7 @@ namespace Aldentea.ChallongeSolkoff.Core2
 				}
 
 			}
-			int _tournamentID;
+			string _tournamentID;
 
 			public ObservableCollection<Match> Matches { get; } = new ObservableCollection<Match>();
 

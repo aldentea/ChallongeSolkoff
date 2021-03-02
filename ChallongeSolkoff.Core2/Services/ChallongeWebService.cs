@@ -28,7 +28,7 @@ namespace Aldentea.ChallongeSolkoff.Core2.Services
 			// do something
 		}
 
-		public async Task<IEnumerable<Match>> GetMatches(int tournamentID, string userName, string apiKey)
+		public async Task<IEnumerable<Match>> GetMatches(string tournamentID, string userName, string apiKey)
 		{
 			var stream = await client.GetStreamAsync($"https//{userName}:{apiKey}@api.challonge.com/v1/tounaments/{tournamentID}/matches.json");
 			return await System.Text.Json.JsonSerializer.DeserializeAsync<List<Match>>(stream);
@@ -40,6 +40,6 @@ namespace Aldentea.ChallongeSolkoff.Core2.Services
 
 	public interface IChallongeWebService
 	{
-		Task<IEnumerable<Match>> GetMatches(int tournamentID, string userName, string apiKey);
+		Task<IEnumerable<Match>> GetMatches(string tournamentID, string userName, string apiKey);
 	}
 }
