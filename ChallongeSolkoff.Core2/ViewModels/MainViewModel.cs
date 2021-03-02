@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using MvvmCross.Commands;
+using MvvmCross.ViewModels;
+
 
 namespace Aldentea.ChallongeSolkoff.Core2
 {
@@ -13,6 +15,8 @@ namespace Aldentea.ChallongeSolkoff.Core2
 		public class MainViewModel : MvvmCross.ViewModels.MvxViewModel
 		{
 			readonly IChallongeWebService _challongeWebService;
+
+			#region プロパティ
 
 			public string UserName
 			{
@@ -45,24 +49,60 @@ namespace Aldentea.ChallongeSolkoff.Core2
 			}
 			string _tournamentID;
 
+			public string ErrorMessage
+			{
+				get => _errorMessage;
+				private set
+				{
+					SetProperty(ref _errorMessage, value);
+				}
+			}
+			string _errorMessage;
+
+
 			public ObservableCollection<Match> Matches { get; } = new ObservableCollection<Match>();
 
+			#endregion
+
+			#region *コンストラクタ(MainViewModel)
 			public MainViewModel(IChallongeWebService webService)
 			{
 				_challongeWebService = webService;
+				// ★起動時にここでなぜかRetrieveMatchesが実行される。
+				//RetrieveMatchesTaskNotifier =	MvxNotifyTask.Create(RetrieveMatches, onException: ex => OnException(ex));
+				//RetrieveMatchesCommand = new MvxAsyncCommand(() => RetrieveMatchesTaskNotifier.Task);
+				RetrieveMatchesCommand = new MvxAsyncCommand(RetrieveMatches);
 			}
+			#endregion
 
 
 			public async Task RetrieveMatches()
 			{
 				Matches.Clear();
-				foreach (var match in await _challongeWebService.GetMatches(TournamentID, UserName, ApiKey))
+				ErrorMessage = string.Empty;
+				// ★ので、ここにこんなチェックを入れる。
+				if (!string.IsNullOrEmpty(TournamentID))
 				{
-					Matches.Add(match);
+					foreach (var match in await _challongeWebService.GetMatches(TournamentID, UserName, ApiKey))
+					{
+						Matches.Add(match.Match);
+					}
 				}
 			}
 
-			public IMvxAsyncCommand RetrieveMatchesCommand => new MvxAsyncCommand(RetrieveMatches);
+			public IMvxAsyncCommand RetrieveMatchesCommand { get; private set; }
+
+			public MvxNotifyTask RetrieveMatchesTaskNotifier
+			{
+				get => _retrieveMatchesTaskNotifier;
+				private set => SetProperty(ref _retrieveMatchesTaskNotifier, value);
+			}
+			private MvxNotifyTask _retrieveMatchesTaskNotifier;
+
+			private void OnException(Exception ex)
+			{
+				ErrorMessage = ex.Message;
+			}
 
 		}
 	}
