@@ -109,7 +109,7 @@ namespace Aldentea.ChallongeSolkoff.Core2
 					// playerが勝った相手のID。
 					var wons = match_list.Where(m => m.Winner == player.ID).Select(m => m.Loser);
 					player.SbScore = Participants.Where(p => wons.Contains(p.ID)).Sum(p => p.Wins);
-					var losts = match_list.Where(m => m.Winner == player.ID).Select(m => m.Winner);
+					var losts = match_list.Where(m => m.Loser == player.ID).Select(m => m.Winner);
 					player.Solkoff = player.SbScore + Participants.Where(p => losts.Contains(p.ID)).Sum(p => p.Wins);
 				}
 
