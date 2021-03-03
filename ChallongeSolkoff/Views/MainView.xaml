@@ -15,29 +15,54 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<Grid Grid.Row="0">
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="200" />
-				<ColumnDefinition />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" MinWidth="120" InputScope="LogOnName" AutomationProperties.HelpText="ユーザ名" Text="{Binding UserName, Mode=TwoWay}" />
-			<TextBox Grid.Row="0" Grid.Column="1" MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" Grid.ColumnSpan="2" />
-			<TextBox Grid.Row="1" Grid.Column="0" MinWidth="120" Text="{Binding TournamentID, Mode=TwoWay}" />
-			<Button Grid.Row="1" Grid.Column="1"  Content="プレイヤー取得" MinWidth="60" Command="{Binding RetrieveParticipantsCommand}" />
-			<Button Grid.Row="1" Grid.Column="2"  Content="マッチ結果取得" MinWidth="60" Command="{Binding RetrieveMatchesCommand}" />
-		</Grid>
+		<StackPanel Grid.Row="0">
+			<Expander Header="Challongeユーザ情報">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Label Content="ユーザ名" />
+						<TextBox MinWidth="120" InputScope="LogOnName"
+										 Text="{Binding UserName, Mode=TwoWay}" />
+					</StackPanel>
+					<StackPanel Grid.Row="1" Orientation="Horizontal">
+						<Label Content="APIキー" />
+						<TextBox MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" InputScope="Password" />
+					</StackPanel>
+				</Grid>
+			</Expander>
+			<StackPanel Orientation="Horizontal">
+				<TextBox MinWidth="120" Text="{Binding TournamentID, Mode=TwoWay}" />
+				<Button  Content="プレイヤー取得" MinWidth="60" Command="{Binding RetrieveParticipantsCommand}" />
+				<Button  Content="マッチ結果取得" MinWidth="60" Command="{Binding RetrieveMatchesCommand}" />
+			</StackPanel>
+		</StackPanel>
 		<Label Grid.Row="1" Content="{Binding ErrorMessage}" />
 		<TabControl Grid.Row="2">
-			<TabItem Header="プレイヤー結果">
-				<DataGrid ItemsSource="{Binding Participants}"/>
+			<TabControl.Resources>
+				<Style TargetType="TextBlock" x:Key="numberElementStyle">
+					<Setter Property="TextAlignment" Value="Right" />
+				</Style>
+			</TabControl.Resources>
+			<TabItem Header="プレイヤー">
+				<DataGrid ItemsSource="{Binding Participants}" CanUserAddRows="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="勝" Binding="{Binding Wins}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="負" Binding="{Binding Loses}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="ソルコフ" Binding="{Binding Solkoff}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="SB" Binding="{Binding SbScore}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="得失差" Binding="{Binding Delta}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="得" Binding="{Binding Plus}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="失" Binding="{Binding Minus}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="マッチ結果">
-				<DataGrid ItemsSource="{Binding Matches}"/>
+				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False"/>
 			</TabItem>
 		</TabControl>
 
