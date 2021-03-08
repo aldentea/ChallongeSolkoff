@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChallongeSolkoff.Core2\ChallongeSolkoff.Core2.csproj" />
+    <ProjectReference Include="..\ChallongeSolkoff.Core\ChallongeSolkoff.Core.csproj" />
   </ItemGroup>
 
 </Project>

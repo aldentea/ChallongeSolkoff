@@ -8,7 +8,7 @@ using MvvmCross.ViewModels;
 using System.Linq;
 
 
-namespace Aldentea.ChallongeSolkoff.Core2
+namespace Aldentea.ChallongeSolkoff.Core
 {
 	using Services;
 	namespace ViewModels

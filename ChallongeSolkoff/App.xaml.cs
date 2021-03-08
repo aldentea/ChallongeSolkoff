@@ -24,11 +24,11 @@ namespace Aldentea.ChallongeSolkoff
 	}
 
 
-	public class Setup : MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core2.App>
+	public class Setup : MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core.App>
 	{
 		protected override void InitializeFirstChance()
 		{
-			MvvmCross.Mvx.IoCProvider.RegisterType<Core2.Services.IChallongeWebService, Core2.Services.ChallongeWebService>();
+			MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IChallongeWebService, Core.Services.ChallongeWebService>();
 			//MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IRetrieveMailsService, Core.Services.RetrieveMailsService>();
 			base.InitializeFirstChance();
 		}

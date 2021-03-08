@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.ComponentModel;
 
-namespace Aldentea.ChallongeSolkoff.Core2
+namespace Aldentea.ChallongeSolkoff.Core
 {
 
 	public class ParticipantItem
