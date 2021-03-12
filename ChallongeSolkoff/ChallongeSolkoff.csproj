@@ -7,6 +7,7 @@
     <RootNamespace>Aldentea.ChallongeSolkoff</RootNamespace>
     <Version>0.1.0</Version>
     <Authors>aldentea</Authors>
+    <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
