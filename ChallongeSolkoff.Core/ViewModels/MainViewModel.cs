@@ -66,20 +66,50 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 			#endregion
 
+			// これらは、IMvxAsyncCommandではなく、IMvxCommandを使う。
+			public IMvxCommand RetrieveMatchesCommand { get; private set; }
+			public IMvxCommand RetrieveParticipantsCommand { get; private set; }
+
+			#region *RetrieveParticipantsTaskNotifierプロパティ
+			public MvxNotifyTask RetrieveParticipantsTaskNotifier
+			{
+				get => _retrieveParticipantsTaskNotifier;
+				private set => SetProperty(ref _retrieveParticipantsTaskNotifier, value);
+			}
+			private MvxNotifyTask _retrieveParticipantsTaskNotifier;
+			#endregion
+
+			#region *RetrieveMatchesTaskNotifierプロパティ
+			public MvxNotifyTask RetrieveMatchesTaskNotifier
+			{
+				get => _retrieveMatchesTaskNotifier;
+				private set => SetProperty(ref _retrieveMatchesTaskNotifier, value);
+			}
+			private MvxNotifyTask _retrieveMatchesTaskNotifier;
+			#endregion
+
+			private void OnException(Exception ex)
+			{
+				ErrorMessage = ex.Message;
+			}
+
+
 			#region *コンストラクタ(MainViewModel)
 			public MainViewModel(IChallongeWebService webService)
 			{
 				_challongeWebService = webService;
-				// ★起動時にここでなぜかRetrieveMatchesが実行される。
-				//RetrieveMatchesTaskNotifier =	MvxNotifyTask.Create(RetrieveMatches, onException: ex => OnException(ex));
-				//RetrieveMatchesCommand = new MvxAsyncCommand(() => RetrieveMatchesTaskNotifier.Task);
-				RetrieveMatchesCommand = new MvxAsyncCommand(RetrieveMatches);
-				RetrieveParticipantsCommand = new MvxAsyncCommand(RetrieveParticipants);
 
+				RetrieveParticipantsCommand
+					= new MvxCommand(() => RetrieveParticipantsTaskNotifier = MvxNotifyTask.Create(
+						() => RetrieveParticipants(), onException: ex => OnException(ex)));
+				RetrieveMatchesCommand
+					= new MvxCommand(() => RetrieveMatchesTaskNotifier = MvxNotifyTask.Create(
+						() => RetrieveMatches(), onException: ex => OnException(ex)));
 			}
 			#endregion
 
 
+			#region *マッチ情報を取得(RetrieveMatches)
 			public async Task RetrieveMatches()
 			{
 				Matches.Clear();
@@ -114,7 +144,9 @@ namespace Aldentea.ChallongeSolkoff.Core
 				}
 
 			}
+			#endregion
 
+			#region *参加者情報を取得(RetrieveParticipants)
 			private async Task RetrieveParticipants()
 			{
 				Participants.Clear();
@@ -127,23 +159,9 @@ namespace Aldentea.ChallongeSolkoff.Core
 					}
 				}
 			}
+			#endregion
 
 
-
-			public IMvxAsyncCommand RetrieveMatchesCommand { get; private set; }
-			public IMvxAsyncCommand RetrieveParticipantsCommand { get; private set; }
-
-			//public MvxNotifyTask RetrieveMatchesTaskNotifier
-			//{
-			//	get => _retrieveMatchesTaskNotifier;
-			//	private set => SetProperty(ref _retrieveMatchesTaskNotifier, value);
-			//}
-			//private MvxNotifyTask _retrieveMatchesTaskNotifier;
-
-			//private void OnException(Exception ex)
-			//{
-			//	ErrorMessage = ex.Message;
-			//}
 
 		}
 	}

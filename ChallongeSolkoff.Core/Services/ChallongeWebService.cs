@@ -56,7 +56,8 @@ namespace Aldentea.ChallongeSolkoff.Core.Services
 			}
 			else
 			{
-				return new List<ParticipantItem>();
+				//return new List<ParticipantItem>();
+				throw new Exception(response.StatusCode.ToString());
 			}
 
 		}
