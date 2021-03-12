@@ -113,14 +113,14 @@ namespace Aldentea.ChallongeSolkoff.Core
 			get => Plus - Minus;
 		}
 
-
+		#region INotifyPropertyChanged実装
 		protected void NotifyPropertyChanged(string propertyName)
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-
+		#endregion
 
 	}
 }
