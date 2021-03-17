@@ -62,6 +62,32 @@ namespace Aldentea.ChallongeSolkoff.Core.Services
 
 		}
 
+		public async Task<ParticipantItem> AddParticipant(string participantName, string tournamentID, string userName, string apiKey, string misc = null)
+		{
+			var base_uri = $@"https://api.challonge.com/v1/tournaments/{tournamentID}/participants.json";
+			var request = new HttpRequestMessage(HttpMethod.Post, base_uri);
+			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
+				Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{apiKey}"))
+			);
+
+			var misc_string = string.IsNullOrEmpty(misc) ? string.Empty : $@", ""misc"": ""{misc}""";
+			request.Content = new StringContent($@"{{ ""participant"": {{ ""name"": ""{participantName}""{misc_string} }} }}");
+			var response = await client.SendAsync(request);
+			if (response.StatusCode == System.Net.HttpStatusCode.OK)
+			{
+				using (var stream = new System.IO.MemoryStream(await response.Content.ReadAsByteArrayAsync()))
+				{
+					return await System.Text.Json.JsonSerializer.DeserializeAsync<ParticipantItem>(stream);
+				}
+			}
+			else
+			{
+				//return new List<ParticipantItem>();
+				throw new Exception(response.StatusCode.ToString());
+			}
+
+		}
+
 	}
 
 
@@ -70,5 +96,6 @@ namespace Aldentea.ChallongeSolkoff.Core.Services
 	{
 		Task<IEnumerable<MatchItem>> GetMatches(string tournamentID, string userName, string apiKey);
 		Task<IEnumerable<ParticipantItem>> GetParticipants(string tournamentID, string userName, string apiKey);
+		Task<ParticipantItem> AddParticipant(string participantName, string tournamentID, string userName, string apiKey, string misc = null);
 	}
 }
