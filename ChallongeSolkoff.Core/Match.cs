@@ -20,6 +20,10 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 	public class Match
 	{
+		
+		[JsonPropertyName("round")]
+		public int Round { get; set; }
+
 		[JsonPropertyName("player1_id")]
 		public int Player1 { get; set; }
 		[JsonPropertyName("player2_id")]
