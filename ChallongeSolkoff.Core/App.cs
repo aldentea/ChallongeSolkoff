@@ -10,7 +10,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 		{
 			//base.Initialize();
 			MvvmCross.Mvx.IoCProvider.RegisterType<Services.IChallongeWebService, Services.ChallongeWebService>();
-			RegisterAppStart<ViewModels.MainViewModel>();
+			//RegisterAppStart<ViewModels.MainViewModel>();
+			RegisterAppStart<ViewModels.Idaten11ViewModel>();
 		}
 	}
 }
