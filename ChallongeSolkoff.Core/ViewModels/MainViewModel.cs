@@ -114,11 +114,17 @@ namespace Aldentea.ChallongeSolkoff.Core
 			{
 				Matches.Clear();
 				ErrorMessage = string.Empty;
-				// ★ので、ここにこんなチェックを入れる。
+
 				if (!string.IsNullOrEmpty(TournamentID))
 				{
 					foreach (var match in await _challongeWebService.GetMatches(TournamentID, UserName, ApiKey))
 					{
+						// プレイヤー名を取得する。
+						var participant1 = Participants.FirstOrDefault(p => p.ID == match.Player1);
+						match.Match.Player1Name = participant1.Name;
+						var participant2 = Participants.FirstOrDefault(p => p.ID == match.Player2);
+						match.Match.Player2Name = participant2.Name;
+
 						Matches.Add(match.Match);
 					}
 				}

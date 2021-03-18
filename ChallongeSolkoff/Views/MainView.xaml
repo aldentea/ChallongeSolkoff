@@ -62,7 +62,15 @@
 				</DataGrid>
 			</TabItem>
 			<TabItem Header="マッチ結果">
-				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False"/>
+				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="R" Binding="{Binding Round}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="Player1" Binding="{Binding Player1Name}" />
+						<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
+						<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
+						<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 		</TabControl>
 

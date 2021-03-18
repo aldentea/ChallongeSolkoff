@@ -29,6 +29,11 @@ namespace Aldentea.ChallongeSolkoff.Core
 		[JsonPropertyName("player2_id")]
 		public int Player2 { get; set; }
 
+		public string Player1Name { get; set; }
+
+		public string Player2Name { get; set; }
+
+
 		[JsonPropertyName("winner_id")]
 		public int? Winner { get; set; }
 
