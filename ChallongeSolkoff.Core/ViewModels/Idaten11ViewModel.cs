@@ -70,6 +70,9 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 		public IMvxCommand RetrievePreliminaryInfoCommand { get; private set; }
 		//public IMvxCommand RetrievePreliminaryParticipantsCommand { get; private set; }
 
+		public IMvxCommand<Match> UpdateMatchCommand { get; private set; }
+
+
 		#region *RetrievePreliminaryMatchesTaskNotifierプロパティ
 		public MvxNotifyTask RetrievePreliminaryInfoTaskNotifier
 		{
@@ -102,6 +105,9 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 			RetrievePreliminaryInfoCommand
 				= new MvxCommand(() => RetrievePreliminaryInfoTaskNotifier = MvxNotifyTask.Create(
 					() => RetrievePreliminaryInfo(), onException: ex => OnException(ex)));
+
+			UpdateMatchCommand = new MvxCommand<Match>(match => UpdateMatch(match));
+
 			//RetrievePreliminaryParticipantsCommand
 			//	= new MvxCommand(() => RetrievePreliminaryParticipantsTaskNotifier = MvxNotifyTask.Create(
 			//		() => RetrievePreliminaryParticipants(), onException: ex => OnException(ex)));
@@ -148,6 +154,11 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 
 		#endregion
 
+
+		void UpdateMatch(Match match)
+		{
+			match.Player1Score = 7;
+		}
 
 	}
 }

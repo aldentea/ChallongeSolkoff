@@ -28,14 +28,14 @@
 			<ColumnDefinition Width="Auto" MinWidth="100" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Player1Score}" />
+			<TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Player1Score, Mode=TwoWay}" />
 			<Label Grid.Row="0" Grid.Column="1" Content="{Binding Player1Name}" />
-			<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Player2Score}" />
+			<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Player2Score, Mode=TwoWay}" />
 			<Label Grid.Row="1" Grid.Column="1" Content="{Binding Player2Name}" />
 		</Grid>
 		<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right">
-			<Button Content="OK" />
-			<Button Content="キャンセル" />
+			<Button Content="OK" Command="{Binding SubmitCommand}" />
+			<Button Content="キャンセル" IsCancel="True" />
 		</StackPanel>
 	</StackPanel>
 </views:MvxWindow>
