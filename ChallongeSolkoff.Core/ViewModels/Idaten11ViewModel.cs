@@ -57,6 +57,16 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 		}
 		string _preliminaryID;
 
+		public string MainID
+		{
+			get => _mainID;
+			set
+			{
+				SetProperty(ref _mainID, value);
+			}
+
+		}
+		string _mainID;
 
 
 		public ObservableCollection<Match> PreliminaryMatches { get; } = new ObservableCollection<Match>();
@@ -115,6 +125,10 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 
 			_inputScoreInteraction = new MvxInteraction<InputScoreQuestion>();
 
+			// とりあえず。
+			_mainID = "210320_idaten_main";
+			_preliminaryID = "210320_idaten_pre";
+
 		}
 
 		#region 予選の情報を取得
@@ -168,14 +182,27 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 				{
 					if (answer.Ok)
 					{
-						match.Player1Score = answer.Player1Score;
-						match.Player2Score = answer.Player2Score;
+						match.InputScores(answer.Player1Score, answer.Player2Score);
+						// InputScoresメソッドで勝敗も判定する。
 						// マッチ結果を送信。
-						//_challongeWebService.
+						var match_item = await _challongeWebService.UpdateMatch(match, PreliminaryID, UserName, ApiKey);
+						// 勝者を本戦に登録する。
+						Participant winner = null;
+						if (match_item.Winner == match_item.Player1)
+						{
+							winner = Participants.FirstOrDefault(p => p.ID == match_item.Player1);
+						}
+						else if (match_item.Winner == match_item.Player2)
+						{
+							winner = Participants.FirstOrDefault(p => p.ID == match_item.Player2);
+						}
+						if (winner != null)
+						{
+							await _challongeWebService.AddParticipant(winner.Name, MainID, UserName, ApiKey);
+						}
 					}
 				}
 			};
-			//match.Player1Score = 7;
 			_inputScoreInteraction.Raise(request);
 		}
 

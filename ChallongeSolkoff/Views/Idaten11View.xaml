@@ -19,6 +19,7 @@
 					<Grid.RowDefinitions>
 						<RowDefinition />
 						<RowDefinition />
+						<RowDefinition />
 					</Grid.RowDefinitions>
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Label Content="ユーザ名" />
@@ -28,6 +29,10 @@
 					<StackPanel Grid.Row="1" Orientation="Horizontal">
 						<Label Content="APIキー" />
 						<TextBox MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" InputScope="Password" />
+					</StackPanel>
+					<StackPanel Grid.Row="2" Orientation="Horizontal">
+						<Label Content="本戦トーナメント" />
+						<TextBox MinWidth="120" Text="{Binding MainID, Mode=TwoWay}" />
 					</StackPanel>
 				</Grid>
 			</Expander>
