@@ -112,6 +112,9 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 			//	= new MvxCommand(() => RetrievePreliminaryParticipantsTaskNotifier = MvxNotifyTask.Create(
 			//		() => RetrievePreliminaryParticipants(), onException: ex => OnException(ex)));
 
+
+			_inputScoreInteraction = new MvxInteraction<InputScoreQuestion>();
+
 		}
 
 		#region 予選の情報を取得
@@ -157,8 +160,27 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 
 		void UpdateMatch(Match match)
 		{
-			match.Player1Score = 7;
+			var request = new InputScoreQuestion
+			{
+				Player1Name = match.Player1Name,
+				Player2Name = match.Player2Name,
+				InputScoreCallback = async (answer) =>
+				{
+					if (answer.Ok)
+					{
+						match.Player1Score = answer.Player1Score;
+						match.Player2Score = answer.Player2Score;
+						// マッチ結果を送信。
+						//_challongeWebService.
+					}
+				}
+			};
+			//match.Player1Score = 7;
+			_inputScoreInteraction.Raise(request);
 		}
+
+		public IMvxInteraction<InputScoreQuestion> InputScoreInteraction => _inputScoreInteraction;
+		readonly MvxInteraction<InputScoreQuestion> _inputScoreInteraction;
 
 	}
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Aldentea.ChallongeSolkoff.Views"
           		xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
               mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="640">
+             d:DesignHeight="720" d:DesignWidth="640" x:Name="IdatenView">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" MinHeight="50" />
@@ -53,6 +53,13 @@
 						<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
 						<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
 						<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
+							<DataGridTemplateColumn>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Button Content="スコア入力" Command="{Binding ElementName=IdatenView, Path=DataContext.UpdateMatchCommand}" CommandParameter="{Binding}" />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
 					</DataGrid.Columns>
 				</DataGrid>
 				</StackPanel>

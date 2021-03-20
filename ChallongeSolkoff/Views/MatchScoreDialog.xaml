@@ -34,7 +34,7 @@
 			<Label Grid.Row="1" Grid.Column="1" Content="{Binding Player2Name}" />
 		</Grid>
 		<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right">
-			<Button Content="OK" Command="{Binding SubmitCommand}" />
+			<Button Content="OK" Click="ButtonOK_Click" />
 			<Button Content="キャンセル" IsCancel="True" />
 		</StackPanel>
 	</StackPanel>

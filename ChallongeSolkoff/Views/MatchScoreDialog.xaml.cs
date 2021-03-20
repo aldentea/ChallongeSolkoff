@@ -22,5 +22,11 @@ namespace Aldentea.ChallongeSolkoff.Views
 		{
 			InitializeComponent();
 		}
+
+		private void ButtonOK_Click(object sender, RoutedEventArgs e)
+		{
+			this.DialogResult = true;
+			this.Close();
+		}
 	}
 }
