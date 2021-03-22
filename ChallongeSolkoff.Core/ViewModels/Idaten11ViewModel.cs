@@ -78,7 +78,6 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 
 		// これらは、IMvxAsyncCommandではなく、IMvxCommandを使う。
 		public IMvxCommand RetrievePreliminaryInfoCommand { get; private set; }
-		//public IMvxCommand RetrievePreliminaryParticipantsCommand { get; private set; }
 
 		public IMvxCommand<Match> UpdateMatchCommand { get; private set; }
 
@@ -92,13 +91,13 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 		private MvxNotifyTask _retrievePreliminaryInfoTaskNotifier;
 		#endregion
 
-		#region *RetrievePreliminaryParticipantsTaskNotifierプロパティ
-		//public MvxNotifyTask RetrievePreliminaryParticipantsTaskNotifier
-		//{
-		//	get => _retrievePreliminaryParticipantsTaskNotifier;
-		//	private set => SetProperty(ref _retrievePreliminaryParticipantsTaskNotifier, value);
-		//}
-		//private MvxNotifyTask _retrievePreliminaryParticipantsTaskNotifier;
+		#region *UpdateMatchTaskNotifierプロパティ
+		public MvxNotifyTask UpdateMatchTaskNotifier
+		{
+			get => _updateMatchTaskNotifier;
+			private set => SetProperty(ref _updateMatchTaskNotifier, value);
+		}
+		private MvxNotifyTask _updateMatchTaskNotifier;
 		#endregion
 
 
@@ -116,12 +115,8 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 				= new MvxCommand(() => RetrievePreliminaryInfoTaskNotifier = MvxNotifyTask.Create(
 					() => RetrievePreliminaryInfo(), onException: ex => OnException(ex)));
 
+			// これで例外をキャッチできる？
 			UpdateMatchCommand = new MvxCommand<Match>(match => UpdateMatch(match));
-
-			//RetrievePreliminaryParticipantsCommand
-			//	= new MvxCommand(() => RetrievePreliminaryParticipantsTaskNotifier = MvxNotifyTask.Create(
-			//		() => RetrievePreliminaryParticipants(), onException: ex => OnException(ex)));
-
 
 			_inputScoreInteraction = new MvxInteraction<InputScoreQuestion>();
 
@@ -174,10 +169,12 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 
 		void UpdateMatch(Match match)
 		{
+			ErrorMessage = string.Empty;
 			var request = new InputScoreQuestion
 			{
 				Player1Name = match.Player1Name,
 				Player2Name = match.Player2Name,
+
 				InputScoreCallback = async (answer) =>
 				{
 					if (answer.Ok)
@@ -185,7 +182,16 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 						match.InputScores(answer.Player1Score, answer.Player2Score);
 						// InputScoresメソッドで勝敗も判定する。
 						// マッチ結果を送信。
-						var match_item = await _challongeWebService.UpdateMatch(match, PreliminaryID, UserName, ApiKey);
+						MatchItem match_item = null;
+						try
+						{
+							match_item = await _challongeWebService.UpdateMatch(match, PreliminaryID, UserName, ApiKey);
+						}
+						catch (Exception ex)
+						{
+							OnException(ex);
+							return;
+						}
 						// 勝者を本戦に登録する。
 						Participant winner = null;
 						if (match_item.Winner == match_item.Player1)
@@ -198,12 +204,13 @@ namespace Aldentea.ChallongeSolkoff.Core.ViewModels
 						}
 						if (winner != null)
 						{
-							await _challongeWebService.AddParticipant(winner.Name, MainID, UserName, ApiKey);
+								await _challongeWebService.AddParticipant(winner.Name, MainID, UserName, ApiKey);
 						}
 					}
 				}
 			};
 			_inputScoreInteraction.Raise(request);
+
 		}
 
 		public IMvxInteraction<InputScoreQuestion> InputScoreInteraction => _inputScoreInteraction;
