@@ -20,7 +20,9 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 	public class Match
 	{
-		
+		[JsonPropertyName("id")]
+		public int ID { get; set; }
+
 		[JsonPropertyName("round")]
 		public int Round { get; set; }
 
@@ -76,6 +78,22 @@ namespace Aldentea.ChallongeSolkoff.Core
 		public int Player2Score
 		{
 			get; set;
+		}
+
+		public void InputScores(int player1Score, int player2Score)
+		{
+			this.Player1Score = player1Score;
+			this.Player2Score = player2Score;
+			if (player1Score > player2Score)
+			{
+				Winner = Player1;
+				Loser = Player2;
+			}
+			else if (player1Score < player2Score)
+			{
+				Winner = Player2;
+				Loser = Player1;
+			}
 		}
 
 	}
