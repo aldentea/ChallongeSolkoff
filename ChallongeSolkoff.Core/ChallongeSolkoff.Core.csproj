@@ -16,4 +16,8 @@
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChallongeSolkoff.Base\ChallongeSolkoff.Base.csproj" />
+  </ItemGroup>
+
 </Project>

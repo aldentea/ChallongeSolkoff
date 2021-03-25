@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 using System.Xml.Linq;
 
-namespace Aldentea.ChallongeSolkoff.Core.Services
+namespace Aldentea.ChallongeSolkoff.Base.Services
 {
 	public class ChallongeWebService : IChallongeWebService
 	{
