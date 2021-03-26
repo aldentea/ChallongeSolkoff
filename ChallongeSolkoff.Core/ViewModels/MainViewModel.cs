@@ -10,7 +10,8 @@ using System.Linq;
 
 namespace Aldentea.ChallongeSolkoff.Core
 {
-	using Services;
+	using Base;
+	using Base.Services;
 	namespace ViewModels
 	{
 		public class MainViewModel : MvvmCross.ViewModels.MvxViewModel

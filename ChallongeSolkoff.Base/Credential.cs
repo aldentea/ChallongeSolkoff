@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.ComponentModel;
 
-namespace Aldentea.ChallongeSolkoff.Core
+namespace Aldentea.ChallongeSolkoff.Base
 {
 
 	public class Credential : INotifyPropertyChanged

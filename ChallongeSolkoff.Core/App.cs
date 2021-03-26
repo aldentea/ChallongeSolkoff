@@ -9,7 +9,7 @@ namespace Aldentea.ChallongeSolkoff.Core
 		public override void Initialize()
 		{
 			//base.Initialize();
-			MvvmCross.Mvx.IoCProvider.RegisterType<Services.IChallongeWebService, Services.ChallongeWebService>();
+			MvvmCross.Mvx.IoCProvider.RegisterType<Base.Services.IChallongeWebService, Base.Services.ChallongeWebService>();
 			RegisterAppStart<ViewModels.MainViewModel>();
 		}
 	}
