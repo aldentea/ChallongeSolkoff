@@ -28,7 +28,7 @@ namespace Aldentea.ChallongeSolkoff
 	{
 		protected override void InitializeFirstChance()
 		{
-			MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IChallongeWebService, Core.Services.ChallongeWebService>();
+			MvvmCross.Mvx.IoCProvider.RegisterType<Base.Services.IChallongeWebService, Base.Services.ChallongeWebService>();
 			//MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IRetrieveMailsService, Core.Services.RetrieveMailsService>();
 			base.InitializeFirstChance();
 		}
