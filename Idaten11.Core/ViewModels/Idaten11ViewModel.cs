@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 
-namespace Aldentea.ChallongeSolkoff.Core.ViewModels
+using Aldentea.ChallongeSolkoff.Base.Services;
+using Aldentea.ChallongeSolkoff.Base;
+
+namespace Aldentea.Idaten11.Core.ViewModels
 {
-	using Services;
 
 	public class Idaten11ViewModel : MvxViewModel
 	{

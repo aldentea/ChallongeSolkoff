@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Aldentea.Idaten11.Core</RootNamespace>
+    <Version>0.2.0</Version>
+    <Authors>aldentea</Authors>
+    <Company />
+    <Copyright>MIT License (c) 2021 aldentea</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MvvmCross" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ChallongeSolkoff.Base">
+      <HintPath>..\external\ChallongeSolkoff.Base.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

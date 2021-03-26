@@ -15,7 +15,7 @@ using MvvmCross.ViewModels;
 using MvvmCross.Base;
 using MvvmCross.Binding.BindingContext;
 
-namespace Aldentea.ChallongeSolkoff.Views
+namespace Aldentea.Idaten11.Views
 {
   /// <summary>
   /// Idaten11View.xaml の相互作用ロジック

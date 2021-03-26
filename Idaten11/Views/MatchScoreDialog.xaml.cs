@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MvvmCross.Platforms.Wpf.Views;
 
-namespace Aldentea.ChallongeSolkoff.Views
+namespace Aldentea.Idaten11.Views
 {
 	/// <summary>
 	/// MatchScoreDialog.xaml の相互作用ロジック
