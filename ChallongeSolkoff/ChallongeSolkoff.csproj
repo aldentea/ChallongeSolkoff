@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>Aldentea.ChallongeSolkoff</RootNamespace>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>aldentea</Authors>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>

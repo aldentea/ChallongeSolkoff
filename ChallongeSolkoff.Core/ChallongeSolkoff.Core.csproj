@@ -7,7 +7,7 @@
     <FileVersion>0.2.0.0</FileVersion>
     <RootNamespace>Aldentea.ChallongeSolkoff.Core</RootNamespace>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
