@@ -122,9 +122,15 @@ namespace Aldentea.ChallongeSolkoff.Core
 					{
 						// プレイヤー名を取得する。
 						var participant1 = Participants.FirstOrDefault(p => p.ID == match.Player1);
-						match.Match.Player1Name = participant1.Name;
+						if ((participant1?.ID).HasValue)
+						{
+							match.Match.Player1Name = participant1.Name;
+						}
 						var participant2 = Participants.FirstOrDefault(p => p.ID == match.Player2);
-						match.Match.Player2Name = participant2.Name;
+						if ((participant2?.ID).HasValue)
+						{
+							match.Match.Player2Name = participant2.Name;
+						}
 
 						Matches.Add(match.Match);
 					}

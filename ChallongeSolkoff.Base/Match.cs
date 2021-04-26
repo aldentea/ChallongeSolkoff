@@ -10,8 +10,8 @@ namespace Aldentea.ChallongeSolkoff.Base
 		[JsonPropertyName("match")]
 		public Match Match { get; set; }
 
-		public int Player1 { get => Match.Player1; }
-		public int Player2 { get => Match.Player2; }
+		public int? Player1 { get => Match.Player1; }
+		public int? Player2 { get => Match.Player2; }
 
 		public int Winner { get => Match.Winner ?? 0; }
 
@@ -27,9 +27,9 @@ namespace Aldentea.ChallongeSolkoff.Base
 		public int Round { get; set; }
 
 		[JsonPropertyName("player1_id")]
-		public int Player1 { get; set; }
+		public int? Player1 { get; set; }
 		[JsonPropertyName("player2_id")]
-		public int Player2 { get; set; }
+		public int? Player2 { get; set; }
 
 		public string Player1Name { get; set; }
 
