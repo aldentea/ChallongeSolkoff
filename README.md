@@ -2,7 +2,7 @@
 
 [Challonge](https://challonge.com/)のリーグ戦の結果から、ソルコフやSB（Sonneborn-Bergerスコア）を集計します。
 
-使用環境としては、とりあえずWindowsのみを想定していますが、[.Net Core 3.1 のランタイム](https://dotnet.microsoft.com/download/dotnet/3.1)があれば他の環境でも動作するかもしれません。
+使用環境としては、とりあえず64bit版Windowsのみを想定しています。ただし、他のプラットフォームで動作するようなバイナリを作ることもできるはずですので、そのうち手をつけるかもしれません。
 
 Challongeのアカウントと**APIキー**が必要です。
 
@@ -21,5 +21,5 @@ Challongeのアカウントと**APIキー**が必要です。
 
 zipファイルには2種類あります。
 
-* win-x64 : 64bit版Windows専用です。.Net Coreのランタイムは不要ですが、サイズが非常に大きくなります。
-* （プラットフォーム非特定） : .Net Coreのランタイムがあればどんな環境でも動くことになっていますが、実際どうなのかはよくわかりません。
+* 自己完結型(self-contained) : .Net Core のランタイムがインストールされていない環境でも動作しますが、サイズが非常に大きくなります。
+* ランタイム利用型 : [.Net Core 3.1 のランタイム](https://dotnet.microsoft.com/download/dotnet/3.1)をインストールしておく必要があります。
