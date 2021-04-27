@@ -175,6 +175,40 @@ namespace Aldentea.ChallongeSolkoff.Core
 			#endregion
 
 
+			void ExportParticipants()
+			{
+				var request = new SelectSaveFileQuestion
+				{
+					Callback = (filename) =>
+					{
+						ExportPartcipantsTo(filename);
+					}
+				};
+
+				_selectSaveFileInteraction.Raise(request);
+			}
+
+			// ※名前だけをクリップボードにコピーするか、成績を含めてファイルに出力するかの2択でよい？
+			// PresentationCore.dllのSystem.Windows.Clipboardを参照？
+
+			private void ExportPartcipantsTo(string filename)
+			{
+				
+				if (!string.IsNullOrEmpty(filename))
+				{
+					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
+					{
+						foreach (var participant in Participants)
+						{
+							writer.WriteLine(participant.Name);
+						}
+					}
+				}
+			}
+
+
+			public IMvxInteraction<SelectSaveFileQuestion> SelectSaveFileInteraction => _selectSaveFileInteraction;
+			readonly MvxInteraction<SelectSaveFileQuestion> _selectSaveFileInteraction;
 
 		}
 	}
