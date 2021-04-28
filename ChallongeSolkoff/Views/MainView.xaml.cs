@@ -29,6 +29,7 @@ namespace Aldentea.ChallongeSolkoff.Views
       // おまじない
       var set = this.CreateBindingSet<MainView, Core.ViewModels.MainViewModel>();
       set.Bind(this).For(view => view.SelectSaveFileInteraction).To(vm => vm.SelectSaveFileInteraction).OneWay();
+      set.Bind(this).For(view => view.CopyToClipboardInteraction).To(vm => vm.CopyToClipboardInteraction).OneWay();
       set.Apply();
     }
 
@@ -70,5 +71,29 @@ namespace Aldentea.ChallongeSolkoff.Views
 			}
 
     }
+
+    public IMvxInteraction<string> CopyToClipboardInteraction
+    {
+      get => _copyToClipboardInteraction;
+      set
+      {
+        if (_copyToClipboardInteraction != null)
+        {
+          _copyToClipboardInteraction.Requested -= OnCopyToClipboardInteractionRequested;
+        }
+        _copyToClipboardInteraction = value;
+        if (value != null)
+          _copyToClipboardInteraction.Requested += OnCopyToClipboardInteractionRequested;
+      }
+    }
+    IMvxInteraction<string> _copyToClipboardInteraction;
+
+
+    void OnCopyToClipboardInteractionRequested(object sender, MvxValueEventArgs<string> eventArgs)
+    {
+      var value = eventArgs.Value;
+      System.Windows.Clipboard.SetText(value);
+    }
+
+    }
   }
-}

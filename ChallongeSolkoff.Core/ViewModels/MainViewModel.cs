@@ -210,6 +210,16 @@ namespace Aldentea.ChallongeSolkoff.Core
 			public IMvxInteraction<SelectSaveFileQuestion> SelectSaveFileInteraction => _selectSaveFileInteraction;
 			readonly MvxInteraction<SelectSaveFileQuestion> _selectSaveFileInteraction;
 
+			void CopyParticipantsList()
+			{
+
+			}
+
+
+			public IMvxInteraction<SelectSaveFileQuestion> CopyToClipboardInteraction => _copyToClipboardInteraction;
+			readonly MvxInteraction<SelectSaveFileQuestion> _copyToClipboardInteraction;
+
+
 		}
 	}
 }
