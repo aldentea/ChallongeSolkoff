@@ -219,11 +219,11 @@ namespace Aldentea.ChallongeSolkoff.Core
 				{
 					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
 					{
-						var header = "名前,勝,負,ソルコフ,SB,得,失";
+						var header = "名前,勝,負,ソルコフ,SB,得,失,ID";
 						await writer.WriteLineAsync(header);
 						foreach (var participant in Participants)
 						{
-							var line = $"{participant.Name},{participant.Wins},{participant.Loses},{participant.Solkoff},{participant.SbScore},{participant.Plus},{participant.Minus}";
+							var line = $"{participant.Name},{participant.Wins},{participant.Loses},{participant.Solkoff},{participant.SbScore},{participant.Plus},{participant.Minus},{participant.ID}";
 							await writer.WriteLineAsync(line);
 						}
 					}
