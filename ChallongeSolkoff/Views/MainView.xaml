@@ -52,8 +52,9 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
-					<StackPanel Grid.Row="0">
+					<StackPanel Grid.Row="0" Orientation="Vertical">
 						<Button Content="参加者名をコピー" Command="{Binding CopyParticipantsListCommand}" />
+						<Button Content="表をエクスポート" Command="{Binding ExportParticipantsCommand}" />
 					</StackPanel>
 				<DataGrid Grid.Row="1" ItemsSource="{Binding Participants}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
 					<DataGrid.Columns>

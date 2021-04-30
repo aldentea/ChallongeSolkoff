@@ -207,12 +207,10 @@ namespace Aldentea.ChallongeSolkoff.Core
 						await ExportPartcipantsTo(filename);
 					}
 				};
-
 				_selectSaveFileInteraction.Raise(request);
-			}
 
-			// ※名前だけをクリップボードにコピーするか、成績を含めてファイルに出力するかの2択でよい？
-			// PresentationCore.dllのSystem.Windows.Clipboardを参照？
+				// RaiseしたあとのCallbackでエラーが発生した場合、ここで受け取ることはできない？
+			}
 
 			private async Task ExportPartcipantsTo(string filename)
 			{
@@ -221,9 +219,12 @@ namespace Aldentea.ChallongeSolkoff.Core
 				{
 					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
 					{
+						var header = "名前,勝,負,ソルコフ,SB,得,失";
+						await writer.WriteLineAsync(header);
 						foreach (var participant in Participants)
 						{
-							await writer.WriteLineAsync(participant.Name);
+							var line = $"{participant.Name},{participant.Wins},{participant.Loses},{participant.Solkoff},{participant.SbScore},{participant.Plus},{participant.Minus}";
+							await writer.WriteLineAsync(line);
 						}
 					}
 				}
