@@ -78,15 +78,24 @@
 				</Grid>
 			</TabItem>
 			<TabItem Header="マッチ結果">
-				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="R" Binding="{Binding Round}" ElementStyle="{StaticResource numberElementStyle}" />
-						<DataGridTextColumn Header="Player1" Binding="{Binding Player1Name}" />
-						<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
-						<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
-						<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
-					</DataGrid.Columns>
-				</DataGrid>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Content="表をエクスポート" Command="{Binding ExportMatchesCommand}" />
+					</StackPanel>
+					<DataGrid Grid.Row="1" ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="R" Binding="{Binding Round}" ElementStyle="{StaticResource numberElementStyle}" />
+							<DataGridTextColumn Header="Player1" Binding="{Binding Player1Name}" />
+							<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
+							<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
+							<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
 			</TabItem>
 		</TabControl>
 
