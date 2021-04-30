@@ -47,7 +47,15 @@
 				</Style>
 			</TabControl.Resources>
 			<TabItem Header="プレイヤー">
-				<DataGrid ItemsSource="{Binding Participants}" CanUserAddRows="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0">
+						<Button Content="参加者名をコピー" Command="{Binding CopyParticipantsListCommand}" />
+					</StackPanel>
+				<DataGrid Grid.Row="1" ItemsSource="{Binding Participants}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
 						<DataGridTextColumn Header="勝" Binding="{Binding Wins}" ElementStyle="{StaticResource numberElementStyle}" />
@@ -60,6 +68,7 @@
 						<DataGridTextColumn Header="ID" Binding="{Binding ID}" />
 					</DataGrid.Columns>
 				</DataGrid>
+				</Grid>
 			</TabItem>
 			<TabItem Header="マッチ結果">
 				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">

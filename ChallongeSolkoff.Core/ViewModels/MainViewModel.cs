@@ -70,6 +70,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 			// これらは、IMvxAsyncCommandではなく、IMvxCommandを使う。
 			public IMvxCommand RetrieveMatchesCommand { get; private set; }
 			public IMvxCommand RetrieveParticipantsCommand { get; private set; }
+			public IMvxCommand CopyParticipantsListCommand { get; private set; }
+			public IMvxCommand ExportParticipantsCommand { get; private set; }
 
 			#region *RetrieveParticipantsTaskNotifierプロパティ
 			public MvxNotifyTask RetrieveParticipantsTaskNotifier
@@ -89,6 +91,16 @@ namespace Aldentea.ChallongeSolkoff.Core
 			private MvxNotifyTask _retrieveMatchesTaskNotifier;
 			#endregion
 
+			#region *ExportParticipantsTaskNotifierプロパティ
+			public MvxNotifyTask ExportParticipantsTaskNotifier
+			{
+				get => _exportParticipantsTaskNotifier;
+				private set => SetProperty(ref _exportParticipantsTaskNotifier, value);
+			}
+			private MvxNotifyTask _exportParticipantsTaskNotifier;
+			#endregion
+
+
 			private void OnException(Exception ex)
 			{
 				ErrorMessage = ex.Message;
@@ -106,6 +118,17 @@ namespace Aldentea.ChallongeSolkoff.Core
 				RetrieveMatchesCommand
 					= new MvxCommand(() => RetrieveMatchesTaskNotifier = MvxNotifyTask.Create(
 						() => RetrieveMatches(), onException: ex => OnException(ex)));
+
+				CopyParticipantsListCommand
+					= new MvxCommand(() => CopyParticipantsList());
+				ExportParticipantsCommand
+					= new MvxCommand(() => ExportParticipants());
+				//ExportParticipantsCommand
+				//	= new MvxCommand(() => ExportParticipantsTaskNotifier = MvxNotifyTask.Create(
+				//		() => ExportParticipants(), onException: ex => OnException(ex)));
+
+				_selectSaveFileInteraction = new MvxInteraction<SelectSaveFileQuestion>();
+				_copyToClipboardInteraction = new MvxInteraction<string>();
 			}
 			#endregion
 
@@ -179,9 +202,9 @@ namespace Aldentea.ChallongeSolkoff.Core
 			{
 				var request = new SelectSaveFileQuestion
 				{
-					Callback = (filename) =>
+					Callback = async (filename) =>
 					{
-						ExportPartcipantsTo(filename);
+						await ExportPartcipantsTo(filename);
 					}
 				};
 
@@ -191,7 +214,7 @@ namespace Aldentea.ChallongeSolkoff.Core
 			// ※名前だけをクリップボードにコピーするか、成績を含めてファイルに出力するかの2択でよい？
 			// PresentationCore.dllのSystem.Windows.Clipboardを参照？
 
-			private void ExportPartcipantsTo(string filename)
+			private async Task ExportPartcipantsTo(string filename)
 			{
 				
 				if (!string.IsNullOrEmpty(filename))
@@ -200,7 +223,7 @@ namespace Aldentea.ChallongeSolkoff.Core
 					{
 						foreach (var participant in Participants)
 						{
-							writer.WriteLine(participant.Name);
+							await writer.WriteLineAsync(participant.Name);
 						}
 					}
 				}
@@ -212,12 +235,13 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 			void CopyParticipantsList()
 			{
-
+				var request = string.Join("\n", Participants.Select(p => p.Name));
+				_copyToClipboardInteraction.Raise(request);
 			}
 
 
-			public IMvxInteraction<SelectSaveFileQuestion> CopyToClipboardInteraction => _copyToClipboardInteraction;
-			readonly MvxInteraction<SelectSaveFileQuestion> _copyToClipboardInteraction;
+			public IMvxInteraction<string> CopyToClipboardInteraction => _copyToClipboardInteraction;
+			readonly MvxInteraction<string> _copyToClipboardInteraction;
 
 
 		}
