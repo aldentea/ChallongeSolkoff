@@ -15,6 +15,12 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
+		<Grid.Resources>
+			<Style TargetType="Button">
+				<Setter Property="Padding" Value="20,3" />
+				<Setter Property="Margin" Value="10,3" />
+			</Style>
+		</Grid.Resources>
 		<StackPanel Grid.Row="0">
 			<Expander Header="Challongeユーザ情報">
 				<Grid>
@@ -25,16 +31,16 @@
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Label Content="ユーザ名" />
 						<TextBox MinWidth="120" InputScope="LogOnName"
-										 Text="{Binding UserName, Mode=TwoWay}" />
+										 Text="{Binding UserName, Mode=TwoWay}" VerticalContentAlignment="Center" />
 					</StackPanel>
 					<StackPanel Grid.Row="1" Orientation="Horizontal">
 						<Label Content="APIキー" />
-						<TextBox MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" InputScope="Password" />
+						<TextBox MinWidth="240" Text="{Binding ApiKey, Mode=TwoWay}" InputScope="Password" VerticalContentAlignment="Center" />
 					</StackPanel>
 				</Grid>
 			</Expander>
 			<StackPanel Orientation="Horizontal">
-				<TextBox MinWidth="120" Text="{Binding TournamentID, Mode=TwoWay}" />
+				<TextBox MinWidth="120" Text="{Binding TournamentID, Mode=TwoWay}" VerticalContentAlignment="Center" />
 				<Button  Content="プレイヤー取得" MinWidth="60" Command="{Binding RetrieveParticipantsCommand}" />
 				<Button  Content="マッチ結果取得" MinWidth="60" Command="{Binding RetrieveMatchesCommand}" />
 			</StackPanel>
@@ -47,7 +53,16 @@
 				</Style>
 			</TabControl.Resources>
 			<TabItem Header="プレイヤー">
-				<DataGrid ItemsSource="{Binding Participants}" CanUserAddRows="True" CanUserDeleteRows="False" AutoGenerateColumns="False">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Content="参加者名をコピー" Command="{Binding CopyParticipantsListCommand}" />
+						<Button Content="表をエクスポート" Command="{Binding ExportParticipantsCommand}" />
+					</StackPanel>
+				<DataGrid Grid.Row="1" ItemsSource="{Binding Participants}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
 						<DataGridTextColumn Header="勝" Binding="{Binding Wins}" ElementStyle="{StaticResource numberElementStyle}" />
@@ -60,17 +75,27 @@
 						<DataGridTextColumn Header="ID" Binding="{Binding ID}" />
 					</DataGrid.Columns>
 				</DataGrid>
+				</Grid>
 			</TabItem>
 			<TabItem Header="マッチ結果">
-				<DataGrid ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="R" Binding="{Binding Round}" ElementStyle="{StaticResource numberElementStyle}" />
-						<DataGridTextColumn Header="Player1" Binding="{Binding Player1Name}" />
-						<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
-						<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
-						<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
-					</DataGrid.Columns>
-				</DataGrid>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Content="表をエクスポート" Command="{Binding ExportMatchesCommand}" />
+					</StackPanel>
+					<DataGrid Grid.Row="1" ItemsSource="{Binding Matches}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="R" Binding="{Binding Round}" ElementStyle="{StaticResource numberElementStyle}" />
+							<DataGridTextColumn Header="Player1" Binding="{Binding Player1Name}" />
+							<DataGridTextColumn Header="Player2" Binding="{Binding Player2Name}" />
+							<DataGridTextColumn Header="Score1" Binding="{Binding Player1Score}" ElementStyle="{StaticResource numberElementStyle}" />
+							<DataGridTextColumn Header="Score2" Binding="{Binding Player2Score}" ElementStyle="{StaticResource numberElementStyle}" />
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
 			</TabItem>
 		</TabControl>
 

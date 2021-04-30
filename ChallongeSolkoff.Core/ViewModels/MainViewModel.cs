@@ -70,6 +70,9 @@ namespace Aldentea.ChallongeSolkoff.Core
 			// これらは、IMvxAsyncCommandではなく、IMvxCommandを使う。
 			public IMvxCommand RetrieveMatchesCommand { get; private set; }
 			public IMvxCommand RetrieveParticipantsCommand { get; private set; }
+			public IMvxCommand CopyParticipantsListCommand { get; private set; }
+			public IMvxCommand ExportParticipantsCommand { get; private set; }
+			public IMvxCommand ExportMatchesCommand { get; private set; }
 
 			#region *RetrieveParticipantsTaskNotifierプロパティ
 			public MvxNotifyTask RetrieveParticipantsTaskNotifier
@@ -89,6 +92,16 @@ namespace Aldentea.ChallongeSolkoff.Core
 			private MvxNotifyTask _retrieveMatchesTaskNotifier;
 			#endregion
 
+			#region *ExportParticipantsTaskNotifierプロパティ
+			public MvxNotifyTask ExportParticipantsTaskNotifier
+			{
+				get => _exportParticipantsTaskNotifier;
+				private set => SetProperty(ref _exportParticipantsTaskNotifier, value);
+			}
+			private MvxNotifyTask _exportParticipantsTaskNotifier;
+			#endregion
+
+
 			private void OnException(Exception ex)
 			{
 				ErrorMessage = ex.Message;
@@ -106,7 +119,21 @@ namespace Aldentea.ChallongeSolkoff.Core
 				RetrieveMatchesCommand
 					= new MvxCommand(() => RetrieveMatchesTaskNotifier = MvxNotifyTask.Create(
 						() => RetrieveMatches(), onException: ex => OnException(ex)));
+
+				CopyParticipantsListCommand
+					= new MvxCommand(() => CopyParticipantsList());
+				ExportParticipantsCommand
+					= new MvxCommand(() => ExportParticipants());
+				ExportMatchesCommand
+					= new MvxCommand(() => ExportMatches());
+				//ExportParticipantsCommand
+				//	= new MvxCommand(() => ExportParticipantsTaskNotifier = MvxNotifyTask.Create(
+				//		() => ExportParticipants(), onException: ex => OnException(ex)));
+
+				_selectSaveFileInteraction = new MvxInteraction<SelectSaveFileQuestion>();
+				_copyToClipboardInteraction = new MvxInteraction<string>();
 			}
+
 			#endregion
 
 
@@ -174,6 +201,82 @@ namespace Aldentea.ChallongeSolkoff.Core
 			}
 			#endregion
 
+
+			void ExportParticipants()
+			{
+				var request = new SelectSaveFileQuestion
+				{
+					Callback = async (filename) =>
+					{
+						await ExportPartcipantsTo(filename);
+					}
+				};
+				_selectSaveFileInteraction.Raise(request);
+
+				// RaiseしたあとのCallbackでエラーが発生した場合、ここで受け取ることはできない？
+			}
+
+			private async Task ExportPartcipantsTo(string filename)
+			{
+				
+				if (!string.IsNullOrEmpty(filename))
+				{
+					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
+					{
+						var header = "名前,勝,負,ソルコフ,SB,得,失,ID";
+						await writer.WriteLineAsync(header);
+						foreach (var participant in Participants)
+						{
+							var line = $"{participant.Name},{participant.Wins},{participant.Loses},{participant.Solkoff},{participant.SbScore},{participant.Plus},{participant.Minus},{participant.ID}";
+							await writer.WriteLineAsync(line);
+						}
+					}
+				}
+			}
+
+			private void ExportMatches()
+			{
+				var request = new SelectSaveFileQuestion
+				{
+					Callback = async (filename) =>
+					{
+						await ExportMatchesTo(filename);
+					}
+				};
+				_selectSaveFileInteraction.Raise(request);
+			}
+
+			private async Task ExportMatchesTo(string filename)
+			{
+
+				if (!string.IsNullOrEmpty(filename))
+				{
+					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
+					{
+						var header = "ラウンド,プレイヤー1,プレイヤー2,プレイヤー1スコア,プレイヤー2スコア,プレイヤー1ID,プレイヤー2ID";
+						await writer.WriteLineAsync(header);
+						foreach (var match in Matches)
+						{
+							var line = $"{match.Round},{match.Player1Name},{match.Player2Name},{match.Player1Score},{match.Player2Score},{match.Player1},{match.Player2}";
+							await writer.WriteLineAsync(line);
+						}
+					}
+				}
+			}
+
+
+			public IMvxInteraction<SelectSaveFileQuestion> SelectSaveFileInteraction => _selectSaveFileInteraction;
+			readonly MvxInteraction<SelectSaveFileQuestion> _selectSaveFileInteraction;
+
+			void CopyParticipantsList()
+			{
+				var request = string.Join("\n", Participants.Select(p => p.Name));
+				_copyToClipboardInteraction.Raise(request);
+			}
+
+
+			public IMvxInteraction<string> CopyToClipboardInteraction => _copyToClipboardInteraction;
+			readonly MvxInteraction<string> _copyToClipboardInteraction;
 
 
 		}
