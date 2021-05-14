@@ -22,4 +22,4 @@ Challongeのアカウントと**APIキー**が必要です。
 zipファイルには2種類あります。
 
 * 自己完結型(self-contained) : .Net Core のランタイムがインストールされていない環境でも動作しますが、サイズが非常に大きくなります。
-* ランタイム利用型 : [.Net Core 3.1 のランタイム](https://dotnet.microsoft.com/download/dotnet/3.1)をインストールしておく必要があります。
+* ランタイム利用型 : [.Net Core 3.1 のランタイム](https://dotnet.microsoft.com/download/dotnet/3.1)をシステムにインストールしておく必要があります。
