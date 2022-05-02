@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Aldentea.ChallongeSolkoff.Base</RootNamespace>
     <Authors>aldentea</Authors>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>
 
