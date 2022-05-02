@@ -21,16 +21,17 @@ namespace Aldentea.ChallongeSolkoff.Views
 	/// <summary>
 	/// MainView.xaml の相互作用ロジック
 	/// </summary>
+  [MvvmCross.Platforms.Wpf.Presenters.Attributes.MvxContentPresentation]
 	public partial class MainView : MvvmCross.Platforms.Wpf.Views.MvxWpfView	{
 		public MainView()
 		{
 			InitializeComponent();
 
       // おまじない
-      var set = this.CreateBindingSet<MainView, Core.ViewModels.MainViewModel>();
-      set.Bind(this).For(view => view.SelectSaveFileInteraction).To(vm => vm.SelectSaveFileInteraction).OneWay();
-      set.Bind(this).For(view => view.CopyToClipboardInteraction).To(vm => vm.CopyToClipboardInteraction).OneWay();
-      set.Apply();
+      //var set = this.CreateBindingSet<MainView, Core.ViewModels.MainViewModel>();
+      //set.Bind(this).For(view => view.SelectSaveFileInteraction).To(vm => vm.SelectSaveFileInteraction).OneWay();
+      //set.Bind(this).For(view => view.CopyToClipboardInteraction).To(vm => vm.CopyToClipboardInteraction).OneWay();
+      //set.Apply();
     }
 
     public IMvxInteraction<Core.SelectSaveFileQuestion> SelectSaveFileInteraction

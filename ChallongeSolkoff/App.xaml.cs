@@ -14,23 +14,14 @@ namespace Aldentea.ChallongeSolkoff
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
-	public partial class App : MvvmCross.Platforms.Wpf.Views.MvxApplication
+	public partial class App : MvvmCross.Platforms.Wpf.Views.MvxApplication<Setup, Core.App>
 	{
 		protected override void RegisterSetup()
 		{
-			base.RegisterSetup();
 			this.RegisterSetupType<Setup>();
+			base.RegisterSetup();
 		}
 	}
 
 
-	public class Setup : MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core.App>
-	{
-		protected override void InitializeFirstChance()
-		{
-			MvvmCross.Mvx.IoCProvider.RegisterType<Base.Services.IChallongeWebService, Base.Services.ChallongeWebService>();
-			//MvvmCross.Mvx.IoCProvider.RegisterType<Core.Services.IRetrieveMailsService, Core.Services.RetrieveMailsService>();
-			base.InitializeFirstChance();
-		}
-	}
 }
