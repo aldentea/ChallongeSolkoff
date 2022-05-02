@@ -19,6 +19,7 @@ namespace Aldentea.ChallongeSolkoff
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
+	[MvvmCross.Platforms.Wpf.Presenters.Attributes.MvxWindowPresentation]
 	public partial class MainWindow : MvxWindow
 	{
 		public MainWindow()

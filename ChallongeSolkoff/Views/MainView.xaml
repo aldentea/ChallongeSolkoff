@@ -56,13 +56,18 @@
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
-						<RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Content="参加者名をコピー" Command="{Binding CopyParticipantsListCommand}" />
 						<Button Content="表をエクスポート" Command="{Binding ExportParticipantsCommand}" />
 					</StackPanel>
-				<DataGrid Grid.Row="1" ItemsSource="{Binding Participants}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <CheckBox Content="得点ソルコフを利用する（変更後に再度[マッチ結果取得]を実行して下さい）"
+                                  IsChecked="{Binding UseScoreSolkoff}"/>
+                    </StackPanel>
+                    <DataGrid Grid.Row="2" ItemsSource="{Binding Participants}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
 						<DataGridTextColumn Header="勝" Binding="{Binding Wins}" ElementStyle="{StaticResource numberElementStyle}" />

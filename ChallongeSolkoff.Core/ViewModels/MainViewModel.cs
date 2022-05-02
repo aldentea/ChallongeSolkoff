@@ -20,6 +20,10 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 			#region プロパティ
 
+			#region *UserNameプロパティ
+			/// <summary>
+			/// challonge.comのAPIユーザ名を取得／設定します。
+			/// </summary>
 			public string UserName
 			{
 				get => _userName;
@@ -29,7 +33,12 @@ namespace Aldentea.ChallongeSolkoff.Core
 				}
 			}
 			string _userName = string.Empty;
+			#endregion
 
+			#region *ApiKeyプロパティ
+			/// <summary>
+			/// challonge.comのAPIキーを取得／設定します。
+			/// </summary>
 			public string ApiKey
 			{
 				get => _apiKey;
@@ -40,6 +49,12 @@ namespace Aldentea.ChallongeSolkoff.Core
 			}
 			string _apiKey = string.Empty;
 
+			#endregion
+
+			#region *TournamentIDプロパティ
+			/// <summary>
+			/// トーナメントIDを取得／設定します。
+			/// </summary>
 			public string TournamentID
 			{
 				get => _tournamentID;
@@ -51,6 +66,13 @@ namespace Aldentea.ChallongeSolkoff.Core
 			}
 			string _tournamentID;
 
+			#endregion
+
+			#region *ErrorMessageプロパティ
+
+			/// <summary>
+			/// エラーメッセージを取得（／設定）します。
+			/// </summary>
 			public string ErrorMessage
 			{
 				get => _errorMessage;
@@ -60,7 +82,23 @@ namespace Aldentea.ChallongeSolkoff.Core
 				}
 			}
 			string _errorMessage;
+			#endregion
 
+			#region *UseScoreSolkoffプロパティ
+			/// <summary>
+			/// 得点ソルコフを使うかどうかの値を取得／設定します。
+			/// falseの場合は勝ち数ソルコフを使います。
+			/// </summary>
+			public bool UseScoreSolkoff
+			{
+				get => _useScoreSolkoff;
+				set
+				{
+					SetProperty(ref _useScoreSolkoff, value);
+				}
+			}
+			bool _useScoreSolkoff = false;
+			#endregion
 
 			public ObservableCollection<Match> Matches { get; } = new ObservableCollection<Match>();
 			public ObservableCollection<Participant> Participants { get; } = new ObservableCollection<Participant>();
@@ -174,13 +212,29 @@ namespace Aldentea.ChallongeSolkoff.Core
 				}
 
 				// ソルコフ類の集計を行う。
-				foreach (var player in Participants)
+				if (UseScoreSolkoff)
 				{
-					// playerが勝った相手のID。
-					var wons = match_list.Where(m => m.Winner == player.ID).Select(m => m.Loser);
-					player.SbScore = Participants.Where(p => wons.Contains(p.ID)).Sum(p => p.Wins);
-					var losts = match_list.Where(m => m.Loser == player.ID).Select(m => m.Winner);
-					player.Solkoff = player.SbScore + Participants.Where(p => losts.Contains(p.ID)).Sum(p => p.Wins);
+					foreach (var player in Participants)
+					{
+						// playerが勝った相手のID。
+						var wons = match_list.Where(m => m.Winner == player.ID).Select(m => m.Loser);
+						player.Solkoff = Participants.Where(p => wons.Contains(p.ID)).Sum(p => p.Plus);
+						var losts = match_list.Where(m => m.Loser == player.ID).Select(m => m.Winner);
+						player.Solkoff += Participants.Where(p => losts.Contains(p.ID)).Sum(p => p.Plus);
+						// SBスコアはややこしくなりそうなので、とりあえず計算しないでおく。
+						player.SbScore = 0;
+					}
+				}
+				else
+				{
+					foreach (var player in Participants)
+					{
+						// playerが勝った相手のID。
+						var wons = match_list.Where(m => m.Winner == player.ID).Select(m => m.Loser);
+						player.SbScore = Participants.Where(p => wons.Contains(p.ID)).Sum(p => p.Wins);
+						var losts = match_list.Where(m => m.Loser == player.ID).Select(m => m.Winner);
+						player.Solkoff = player.SbScore + Participants.Where(p => losts.Contains(p.ID)).Sum(p => p.Wins);
+					}
 				}
 
 			}

@@ -56,15 +56,53 @@ namespace Aldentea.ChallongeSolkoff.Base
 				}
 				else
 				{
-					var scores = value.Split('-');
-					if (scores.Length == 2)
+					// 複数セットか否かを確認する。
+					if (value.Contains(","))
 					{
-						Player1Score = Convert.ToInt32(scores[0]);
-						Player2Score = Convert.ToInt32(scores[1]);
+						// 複数セット
+						// とりあえず、獲得セット数を得点とする。
+						int score1 = 0;
+						int score2 = 0;
+						foreach (var set_score in value.Split(','))
+						{
+							var scores = set_score.Split('-');
+							if (scores.Length == 2)
+							{
+								var s1 = Convert.ToInt32(scores[0]);
+								var s2 = Convert.ToInt32(scores[1]);
+								// これをswitchで書けるのは、C#9.0から。
+								if (s1 > s2)
+								{
+									score1 += 1;
+								}
+								else if (s1 < s2)
+								{
+									score2 += 1;
+								}
+								// 同点の場合は特に何もしない。
+							}
+							else
+							{
+								throw new Exception("Scoreプロパティに与える文字列の形式が不正です。");
+							}
+						}
+						Player1Score = score1;
+						Player2Score = score2;
+
 					}
 					else
 					{
-						throw new Exception("Scoreプロパティに与える文字列の形式が不正です。");
+						// 単一セット
+						var scores = value.Split('-');
+						if (scores.Length == 2)
+						{
+							Player1Score = Convert.ToInt32(scores[0]);
+							Player2Score = Convert.ToInt32(scores[1]);
+						}
+						else
+						{
+							throw new Exception("Scoreプロパティに与える文字列の形式が不正です。");
+						}
 					}
 				}
 			}
