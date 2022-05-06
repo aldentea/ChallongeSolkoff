@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 
 
@@ -147,9 +148,10 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 
 			#region *コンストラクタ(MainViewModel)
-			public MainViewModel(IChallongeWebService webService)
+			public MainViewModel(IChallongeWebService webService, ILogger<MainViewModel> logger)
 			{
 				_challongeWebService = webService;
+				_logger = logger;
 
 				RetrieveParticipantsCommand
 					= new MvxCommand(() => RetrieveParticipantsTaskNotifier = MvxNotifyTask.Create(
@@ -174,6 +176,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 
 			#endregion
 
+
+			readonly ILogger<MainViewModel> _logger;
 
 			#region *マッチ情報を取得(RetrieveMatches)
 			public async Task RetrieveMatches()
@@ -252,6 +256,7 @@ namespace Aldentea.ChallongeSolkoff.Core
 						Participants.Add(participant.Participant);
 					}
 				}
+				_logger.Log(LogLevel.Information, "Participants information is retrieved.");
 			}
 			#endregion
 
