@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>Aldentea.ChallongeSolkoff</RootNamespace>
-    <Version>0.4.1</Version>
+    <Version>0.4.2</Version>
     <Authors>aldentea</Authors>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>

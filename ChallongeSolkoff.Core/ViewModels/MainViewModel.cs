@@ -111,6 +111,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 			public IMvxCommand RetrieveParticipantsCommand { get; private set; }
 			public IMvxCommand CopyParticipantsListCommand { get; private set; }
 			public IMvxCommand ExportParticipantsCommand { get; private set; }
+			// (0.4.2)
+			public IMvxCommand ExportStandingsCommand { get; private set; }
 			public IMvxCommand ExportMatchesCommand { get; private set; }
 
 			#region *RetrieveParticipantsTaskNotifierプロパティ
@@ -164,6 +166,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 					= new MvxCommand(() => CopyParticipantsList());
 				ExportParticipantsCommand
 					= new MvxCommand(() => ExportParticipants());
+				ExportStandingsCommand
+					= new MvxCommand(() => ExportStandings());
 				ExportMatchesCommand
 					= new MvxCommand(() => ExportMatches());
 				//ExportParticipantsCommand
@@ -261,6 +265,8 @@ namespace Aldentea.ChallongeSolkoff.Core
 			#endregion
 
 
+			#region ソルコフ付順位表をエクスポート(ExportParticpants)
+
 			void ExportParticipants()
 			{
 				var request = new SelectSaveFileQuestion
@@ -293,6 +299,46 @@ namespace Aldentea.ChallongeSolkoff.Core
 				}
 			}
 
+			#endregion
+
+			// (0.4.2)
+			#region 得点表をエクスポート(ExportStandings)
+
+			void ExportStandings()
+			{
+				var request = new SelectSaveFileQuestion
+				{
+					Callback = async (filename) =>
+					{
+						await ExportStandingsTo(filename);
+					}
+				};
+				_selectSaveFileInteraction.Raise(request);
+
+				// RaiseしたあとのCallbackでエラーが発生した場合、ここで受け取ることはできない？
+			}
+
+			private async Task ExportStandingsTo(string filename)
+			{
+
+				if (!string.IsNullOrEmpty(filename))
+				{
+					using (var writer = new System.IO.StreamWriter(filename, false, Encoding.UTF8))
+					{
+						var header = "名前,得失差,得,失,勝,負,ID";
+						await writer.WriteLineAsync(header);
+						foreach (var participant in Participants)
+						{
+							var line = $"{participant.Name},{participant.Delta},{participant.Plus},{participant.Minus},{participant.Wins},{participant.Loses},{participant.ID}";
+							await writer.WriteLineAsync(line);
+						}
+					}
+				}
+			}
+
+			#endregion
+
+			#region マッチ結果をエクスポート(ExportMatches)
 			private void ExportMatches()
 			{
 				var request = new SelectSaveFileQuestion
@@ -322,7 +368,7 @@ namespace Aldentea.ChallongeSolkoff.Core
 					}
 				}
 			}
-
+			#endregion
 
 			public IMvxInteraction<SelectSaveFileQuestion> SelectSaveFileInteraction => _selectSaveFileInteraction;
 			readonly MvxInteraction<SelectSaveFileQuestion> _selectSaveFileInteraction;

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallongeSolkoff", "ChallongeSolkoff\ChallongeSolkoff.csproj", "{82DF0B52-AEB4-46C2-A1EB-1BE7EA8A0042}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallongeSolkoff.Core", "ChallongeSolkoff.Core\ChallongeSolkoff.Core.csproj", "{571BA31C-425E-494C-A3D8-85083693B882}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallongeSolkoff.Base", "ChallongeSolkoff.Base\ChallongeSolkoff.Base.csproj", "{BBFB0079-4430-4FCF-A36B-FCAE72D5EE36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallongeSolkoff.Base", "ChallongeSolkoff.Base\ChallongeSolkoff.Base.csproj", "{BBFB0079-4430-4FCF-A36B-FCAE72D5EE36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
