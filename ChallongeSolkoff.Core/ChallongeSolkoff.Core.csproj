@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>aldentea</Authors>
     <RootNamespace>Aldentea.ChallongeSolkoff.Core</RootNamespace>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MvvmCross" Version="8.0.2" />
-    <PackageReference Include="MvvmCross.Plugin.Json" Version="8.0.2" />
+    <PackageReference Include="MvvmCross" Version="9.0.9" />
+    <PackageReference Include="MvvmCross.Plugin.Json" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
