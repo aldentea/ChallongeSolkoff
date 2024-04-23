@@ -8,20 +8,22 @@ using MvvmCross.Core;
 using MvvmCross.IoC;
 using MvvmCross.Platforms.Wpf.Core;
 
+
 namespace Aldentea.ChallongeSolkoff
 {
 	public class Setup : MvvmCross.Platforms.Wpf.Core.MvxWpfSetup<Core.App>
 	{
 		protected override ILoggerFactory CreateLogFactory()
 		{
-			// ログを気にしないなら、とりあえずnullでよい。
-			return null;
+			Serilog.Log.Logger = new Serilog.LoggerConfiguration()
+				.MinimumLevel.Debug().CreateLogger();
+
+			return new Serilog.Extensions.Logging.SerilogLoggerFactory();
 		}
 
 		protected override ILoggerProvider CreateLogProvider()
 		{
-			// ログを気にしないなら、とりあえずnullでよい。
-			return null;
+			return new Serilog.Extensions.Logging.SerilogLoggerProvider();
 		}
 
 		protected override void InitializeFirstChance(IMvxIoCProvider iocProvider)
