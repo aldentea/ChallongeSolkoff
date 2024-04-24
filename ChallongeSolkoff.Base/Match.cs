@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Aldentea.ChallongeSolkoff.Base
 {
@@ -57,7 +58,7 @@ namespace Aldentea.ChallongeSolkoff.Base
 				else
 				{
 					// 複数セットか否かを確認する。
-					if (value.Contains(","))
+					if (value.Contains(','))
 					{
 						// 複数セット
 						// とりあえず、獲得セット数を得点とする。
@@ -93,11 +94,12 @@ namespace Aldentea.ChallongeSolkoff.Base
 					else
 					{
 						// 単一セット
-						var scores = value.Split('-');
-						if (scores.Length == 2)
+						//var scores = value.Split('-');
+						var match = Regex.Match(value, @"(-?\d+)-(-?\d+)");
+						if (match != null)
 						{
-							Player1Score = Convert.ToInt32(scores[0]);
-							Player2Score = Convert.ToInt32(scores[1]);
+							Player1Score = Convert.ToInt32(match.Groups[1].Value);
+							Player2Score = Convert.ToInt32(match.Groups[2].Value);
 						}
 						else
 						{
