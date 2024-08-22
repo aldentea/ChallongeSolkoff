@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Aldentea.ChallongeSolkoff.Base</RootNamespace>
     <Authors>aldentea</Authors>
-    <Version>0.4.0</Version>
+    <Version>0.4.3</Version>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="7.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 
 </Project>
