@@ -2,20 +2,20 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>Aldentea.ChallongeSolkoff</RootNamespace>
-    <Version>0.4.3</Version>
+    <Version>0.5.0</Version>
     <Authors>aldentea</Authors>
     <Copyright>MIT License (c) 2021 aldentea</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    <PackageReference Include="MvvmCross" Version="9.0.9" />
-    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="9.0.9" />
-    <PackageReference Include="Serilog" Version="2.12.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+    <PackageReference Include="MvvmCross" Version="10.1.2" />
+    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="10.1.2" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
